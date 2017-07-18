@@ -10,4 +10,4 @@
 ### 下载duilib以unicode方式编译，设置好yvpn工程的包含和库目录
 
 ## 二进制下载
-### [win32 yvpn.zip](http://www.cnygf.net/static/yvpn3.0.2beta.zip)
+### [win32 yvpn 3.0.2 beta.zip](https://github.com/cn-ygf/yvpn/releases/tag/3.0.2)
