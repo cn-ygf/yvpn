@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Window size="600,500" caption="0,0,0,27">
+	<Font id="0" name="微软雅黑" size="16"/>
+	<Font id="1" name="微软雅黑" size="12"/>
+	<Font id="3" name="微软雅黑" size="15"/>
+	<HorizontalLayout>
+		<VerticalLayout pos="0,0,60,0" bkcolor="#FF1790ED" bordercolor="#FFDAD7D6">
+			<VerticalLayout pos="0,0,0,64">
+				<Button pos="0,0,36,36" padding="12,14,0,0" normalimage="yvpn.png"/>
+			</VerticalLayout>
+			<VerticalLayout pos="0,0,0,25" padding="0,10,0,0">
+				<Button name="hostbtn" pos="0,0,24,25" padding="18,0,0,0" normalimage="host.png"/>
+			</VerticalLayout>
+			<VerticalLayout pos="0,0,0,25" padding="0,10,0,0">
+				<Button name="addbtn" pos="0,0,24,25" padding="18,0,0,0" normalimage="add.png"/>
+			</VerticalLayout>
+			<VerticalLayout pos="0,0,0,25" padding="0,10,0,0">
+				<Button name="setbtn" pos="0,0,24,25" padding="18,0,0,0" normalimage="setting.png"/>
+			</VerticalLayout>
+			<VerticalLayout />
+			<VerticalLayout pos="0,0,0,50">
+				<Button name="menubtn" pos="0,0,50,50" padding="5,0,0,0" font="1" normalimage="file='menu.png' source='0,0,30,30'" hotimage="file='' source='30,0,60,30'" pushedimage="file='' source='60,0,90,30'"/>
+			</VerticalLayout>
+		</VerticalLayout>
+		<VerticalLayout bkcolor="#FFF5F5F5">
+			<HorizontalLayout pos="0,0,0,27">
+				<VerticalLayout>
+					<Label name="textshow" textcolor="#FF999999"/>
+				</VerticalLayout>
+				<Button name="minbtn" pos="0,0,30,0" normalimage="file='Min2.png' source='0,0,30,27'" hotimage="file='Min2.png' source='30,0,60,27'" pushedimage="file='Min2.png' source='60,0,90,27'"/>
+				<Button name="closebtn" pos="0,0,30,0" normalimage="file='Close.png' source='0,0,30,27'" hotimage="file='Close.png' source='30,0,60,27'" pushedimage="file='Close.png' source='60,0,90,27'"/>
+			</HorizontalLayout>
+			<TabLayout name="tab_bar" selectedid="0">
+				<VerticalLayout>
+					<HostList padding="0,0,2,0" name="hosts" header="hidden" itemshowhtml="true" vscrollbar="true" itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" vscrollbarstyle="thumbnormalimage=&quot;file='scrollbar_group_normal.png' corner=&apos;2,3,2,3&apos;&quot; thumbhotimage=&quot;file='scrollbar_group_hover.png' corner=&apos;2,3,2,3&apos;&quot; width=&quot;7&quot;" />
+					<VerticalLayout height="30">
+						<Label padding="5,8,0,0" name="textshow" text="就绪" textcolor="#FF999999"/>
+					</VerticalLayout>
+				</VerticalLayout >
+				<VerticalLayout>
+				  <VerticalLayout padding="10,10,10,0">
+					<Text pos="0,0,0,0" text="服务器地址" font="4"/>
+					<Edit name="hostedit" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'" height="30" />
+					<Text padding="0,10,0,0" pos="0,0,0,0" text="VPN类型" font="4"/>
+					<Combo name="typecombo" padding="0,5,0,0" textpadding="0,0,20,0" itemalign="center" bkimage="file='combo_normal.png' corner='1,1,31,1'" hotimage="file='combo_hot.png' corner='1,1,31,1'" pushedimage="file='combo_pushed.png' corner='1,1,31,1'" height="30"  itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" >
+						<ListLabelElement name="typecombo_0" text="PPTP" selected="true" />
+						<ListLabelElement name="typecombo_1" text="L2TP" />
+					</Combo>
+					<Text padding="0,10,0,0" pos="0,0,0,0" text="用户名" font="4"/>
+					<Edit name="usernameedit" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+					<Text padding="0,10,0,0" pos="0,0,0,0" text="密码" font="4"/>
+					<Edit name="passwordedit" padding="0,5,0,0" password="true" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+					<Text padding="0,10,0,0" pos="0,0,0,0" text="L2TP共享密钥" font="4"/>
+					<Edit name="l2tpkeyedit" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+					<Text padding="0,10,0,0" pos="0,0,0,0" text="加密方式" font="4"/>
+					<Combo name="cryptcombo" padding="0,5,0,0" textpadding="0,0,20,0" itemalign="center" itemalign="center" bkimage="file='combo_normal.png' corner='1,1,31,1'" hotimage="file='combo_hot.png' corner='1,1,31,1'" pushedimage="file='combo_pushed.png' corner='1,1,31,1'"  height="30"  itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" >
+						<ListLabelElement name="cryptcombo_0" text="不允许加密" />
+						<ListLabelElement name="cryptcombo_1" text="可选加密" selected="true" />
+						<ListLabelElement name="cryptcombo_2" text="需要加密" />
+						<ListLabelElement name="cryptcombo_3" text="最大强度加密" />
+					</Combo>
+					<Text padding="0,10,0,0" text="备注" font="4"/>
+					<Edit name="remarkedit" padding="0,5,0,0" pos="0,0,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+					<Button name="savebtn" padding="2,10,0,0" pos="0,0,60,30" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+				  </VerticalLayout>
+				</VerticalLayout>
+				<VerticalLayout>
+					<VerticalLayout height="30" />
+					<HorizontalLayout>
+						<VerticalLayout width="80">
+							<Button name="netsetbtn" font="3" text="网络设置" width="60"  padding="18,0,0,0" selected="true" textcolor="FF1790ED" hottextcolor="FF1790ED"/>
+							<Control height="5"/>
+							<Button name="aboutbtn" font="3" text="关于VPN" width="60"  padding="18,0,0,0"  hottextcolor="FF1790ED"/>
+							<Control height="5"/>
+						</VerticalLayout>
+						<VerticalLayout padding="10,0,0,0" width="1" bkcolor="FFE3E3E3" />
+						<VerticalLayout name="net_layout" padding="-1,5,0,0" width="2" height="20" bkcolor="FF1790ED" />
+						<VerticalLayout name="about_layout" padding="-2,38,0,0" width="2" height="20" bkcolor="FF1790ED" visible="false" />
+						<TabLayout name="set_tab" selectedid="0" padding="10,0,20,0">
+							<VerticalLayout>
+								<Text padding="0,10,0,0" pos="0,0,0,0" text="DNS1" font="4"/>
+								<Edit name="dns1edit" text="8.8.8.8" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+								<Text padding="0,10,0,0" pos="0,0,0,0" text="DNS2" font="4"/>
+								<Edit name="dns2edit" text="8.8.4.4" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+								<Button name="save2btn" padding="2,10,0,0" pos="0,0,60,25" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+							</VerticalLayout>
+							<VerticalLayout>
+								<Text padding="0,10,0,0" text="版本信息    YVPN 3.0.2 beta" font="4"/>
+								<Text padding="0,10,0,0" text="2015-2017 (c) YGF <ygf@cnhonker.com>" font="4"/>
+							</VerticalLayout>
+						</TabLayout>
+					</HorizontalLayout>
+				</VerticalLayout>
+			</TabLayout>
+		</VerticalLayout>
+	</HorizontalLayout>
+</Window>
+

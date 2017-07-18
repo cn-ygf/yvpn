@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Window>
+	<ListContainerElement >
+		<VerticalLayout pos="0,0,0,60">
+			<HorizontalLayout >
+				<VerticalLayout name="logo_container" pos="0,0,60,0" inset="10,10,0,0">
+					<Button name="logo" pos="0,0,40,40" mouse="false" normalimage="china.png"/>
+				</VerticalLayout>
+				<VerticalLayout inset="0,10,0,0" width="120">
+					<Label name="texthost" textcolor="#FF282C30"/>
+					<Label name="texttype" textcolor="#FF999999"/>
+				</VerticalLayout>
+				<VerticalLayout inset="0,10,0,0" padding="20,0,0,0">
+					<Label name="textpostion" textcolor="#FF282C30"/>
+					<Label name="textremark"  textcolor="#FF999999"/>
+				</VerticalLayout>
+				<VerticalLayout />
+				<VerticalLayout name="option_layout" pos="0,0,60,0">
+					<Button name="editbtn" pos="0,0,60,20" padding="0,10,1,0" text="编辑" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+					<Button name="delbtn" pos="0,0,60,20" padding="0,0,1,0" text="删除" textcolor="#FFFFFFFF" normalimage="btn_close0.png" hotimage="btn_close1.png" pushedimage="btn_close2.png"/>
+				</VerticalLayout>
+				<VerticalLayout pos="0,0,60,0">
+					<Button name="connbtn" pos="0,0,60,40" padding="0,10,10,0" text="连接" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+				</VerticalLayout>
+			</HorizontalLayout >
+		</VerticalLayout>
+	</ListContainerElement >
+</Window>
+
