@@ -87,7 +87,7 @@ Node* CHostListUI::AddNode(CHostListItem *item, Node* parent, int insertIndex)
 	CButtonUI* pDel = static_cast<CButtonUI*>(paint_manager_.FindSubControlByName(pListElement, _T("delbtn")));
 	if (pPostion != NULL)
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("delbtn_%d"), item->GetId());
 		pDel->SetName(name);
 	}
@@ -95,7 +95,7 @@ Node* CHostListUI::AddNode(CHostListItem *item, Node* parent, int insertIndex)
 	CButtonUI* pEdit = static_cast<CButtonUI*>(paint_manager_.FindSubControlByName(pListElement, _T("editbtn")));
 	if (pPostion != NULL)
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("editbtn_%d"), item->GetId());
 		pEdit->SetName(name);
 	}
@@ -103,7 +103,7 @@ Node* CHostListUI::AddNode(CHostListItem *item, Node* parent, int insertIndex)
 	CButtonUI* pConn = static_cast<CButtonUI*>(paint_manager_.FindSubControlByName(pListElement, _T("connbtn")));
 	if (pConn != NULL)
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("connbtn_%d"), item->GetId());
 		pConn->SetName(name);
 	}
@@ -115,7 +115,7 @@ Node* CHostListUI::AddNode(CHostListItem *item, Node* parent, int insertIndex)
 	CVerticalLayoutUI* pOption = static_cast<CVerticalLayoutUI*>(paint_manager_.FindSubControlByName(pListElement, _T("option_layout")));
 	if (pOption != NULL)
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("option_layout_%d"), item->GetIndex());
 		pOption->SetName(name);
 	}

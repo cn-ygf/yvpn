@@ -13,28 +13,28 @@ CHostItemUI::~CHostItemUI()
 }
 
 
-CDuiString CHostItemUI::GetHost()
+CString CHostItemUI::GetHost()
 {
 	return this->m_Host;
 }
 
-CDuiString CHostItemUI::GetTypeText()
+CString CHostItemUI::GetTypeText()
 {
 	return this->m_TypeText;
 }
-CDuiString CHostItemUI::GetRemark()
+CString CHostItemUI::GetRemark()
 {
 	return this->m_Remark;
 }
-CDuiString CHostItemUI::GetUsername()
+CString CHostItemUI::GetUsername()
 {
 	return this->m_Username;
 }
-CDuiString CHostItemUI::GetPassword()
+CString CHostItemUI::GetPassword()
 {
 	return this->m_Password;
 }
-CDuiString CHostItemUI::GetIpSecKey()
+CString CHostItemUI::GetIpSecKey()
 {
 	return this->m_IpSecKey;
 }
@@ -43,27 +43,27 @@ int CHostItemUI::GetType()
 	return this->m_Type;
 }
 
-void CHostItemUI::SetHost(CDuiString szText)
+void CHostItemUI::SetHost(CString szText)
 {
 	this->m_Host = szText;
 }
-void CHostItemUI::SetTypeText(CDuiString szText)
+void CHostItemUI::SetTypeText(CString szText)
 {
 	this->m_TypeText = szText;
 }
-void CHostItemUI::SetRemark(CDuiString szText)
+void CHostItemUI::SetRemark(CString szText)
 {
 	this->m_Remark = szText;
 }
-void CHostItemUI::SetUsername(CDuiString szText)
+void CHostItemUI::SetUsername(CString szText)
 {
 	this->m_Username = szText;
 }
-void CHostItemUI::SetPassword(CDuiString szText)
+void CHostItemUI::SetPassword(CString szText)
 {
 	this->m_Password = szText;
 }
-void CHostItemUI::SetIpSecKey(CDuiString szText)
+void CHostItemUI::SetIpSecKey(CString szText)
 {
 	this->m_IpSecKey = szText;
 }

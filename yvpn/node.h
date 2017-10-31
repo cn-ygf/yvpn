@@ -11,12 +11,12 @@ enum NodeType
 
 struct NodeData
 {
-	CDuiString host_text_;
-	CDuiString type_text_;
-	CDuiString postion_text_;
-	CDuiString remark_text_;
+	CString host_text_;
+	CString type_text_;
+	CString postion_text_;
+	CString remark_text_;
 	bool folder_;
-	CDuiString text_; 
+	CString text_; 
 	NodeType  type_;
 	CListContainerElementUI* list_elment_;
 };

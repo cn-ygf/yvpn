@@ -3,11 +3,11 @@
 typedef struct _INFO
 {
 	int id;
-	CDuiString host;
-	CDuiString user;
-	CDuiString pass;
-	CDuiString szL2tpKey;
-	CDuiString remark;
+	CString host;
+	CString user;
+	CString pass;
+	CString szL2tpKey;
+	CString remark;
 	DWORD type;
 	DWORD crypt;
 	HRASCONN h;
@@ -17,6 +17,7 @@ typedef struct _CONFIG
 {
 	char dns1[16];
 	char dns2[16];
+	char  route[20];
 }CONFIG, *PCONFIG;
 
 class CMainFrame:
@@ -26,10 +27,7 @@ public:
 	CMainFrame();
 	~CMainFrame();
 	virtual LPCTSTR    GetWindowClassName() const;
-	virtual CDuiString GetSkinFolder();
 	virtual CDuiString GetSkinFile();
-	virtual UILIB_RESOURCETYPE GetResourceType() const;
-	virtual CDuiString GetZIPFileName() const;
 	virtual CControlUI* CreateControl(LPCTSTR pstrClass);
 	virtual void Notify(TNotifyUI& msg);
 	DUI_DECLARE_MESSAGE_MAP()
@@ -46,7 +44,7 @@ private:
 	int Add(LPSTR szHostName, LPSTR szUser, LPSTR szPass, DWORD type, LPSTR szL2tpKey, DWORD crypt, LPSTR szRemark);
 	int Set(int id,LPSTR szHostName, LPSTR szUser, LPSTR szPass, DWORD type, LPSTR szL2tpKey, DWORD crypt, LPSTR szRemark);
 	int Del(int id);
-	CDuiString GetPosition(char* lpszIpAddr);
+	CString GetPosition(char* lpszIpAddr);
 	int m_EditId;
 	int ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost,LPHRASCONN h, DWORD crypt);
 	int ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* lpHost, LPHRASCONN h, DWORD crypt);
@@ -58,6 +56,7 @@ private:
 		_In_  DWORD dwError,
 		_In_  DWORD dwExtendedError);
 	void ShowText(LPCTSTR szText);
+	void ShowTextSetting(LPCTSTR szText);
 	bool OnButtonEvent(void* param);
 	BOOL m_bXp;
 	void SaveConfig(PCONFIG pConfig);

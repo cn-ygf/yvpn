@@ -4,6 +4,7 @@
 #include "CppSQLite3.h"
 #include "unit.h"
 #include "IpFinder.h"
+#include "route.h"
 
 
 CMainFrame *m_pThis = NULL;
@@ -25,10 +26,7 @@ DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
 DUI_END_MESSAGE_MAP()
 
 
-CDuiString CMainFrame::GetSkinFolder()
-{
-	return _T("");
-}
+
 
 CDuiString CMainFrame::GetSkinFile()
 {
@@ -38,20 +36,6 @@ CDuiString CMainFrame::GetSkinFile()
 LPCTSTR	CMainFrame::GetWindowClassName() const
 {
 	return _T("DUIMainFrame");
-}
-
-UILIB_RESOURCETYPE CMainFrame::GetResourceType() const
-{
-#ifdef _DEBUG
-	return UILIB_FILE;
-#else
-	return UILIB_ZIP;
-#endif
-}
-
-CDuiString CMainFrame::GetZIPFileName() const
-{
-	return _T("yvpn.res");
 }
 
 CControlUI* CMainFrame::CreateControl(LPCTSTR pstrClass)
@@ -65,7 +49,7 @@ CControlUI* CMainFrame::CreateControl(LPCTSTR pstrClass)
 
 void CMainFrame::Notify(TNotifyUI& msg)
 {
-	CDuiString SenderName = msg.pSender->GetName();
+	CString SenderName = msg.pSender->GetName();
 	if (msg.sType == _T("windowinit"))
 	{
 		ReadConfig(&m_Config);
@@ -77,6 +61,11 @@ void CMainFrame::Notify(TNotifyUI& msg)
 		pDns2->SetText(lpszDn2);
 		delete[]lpszDn1;
 		delete[]lpszDn2;
+		if (strcmp(m_Config.route,"yes") == 0)
+		{
+			CCheckBoxUI *pCheckBoxRoute = (CCheckBoxUI *)m_PaintManager.FindControl(_T("routecheckbox"));
+			pCheckBoxRoute->SetCheck(true);
+		}
 		m_bXp = FALSE;
 		OSVERSIONINFOEX os = { 0 };
 		os.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -85,6 +74,7 @@ void CMainFrame::Notify(TNotifyUI& msg)
 		{
 			m_bXp = TRUE;
 		}
+
 
 		CButtonUI *pCloseBtn = (CButtonUI*)m_PaintManager.FindControl(_T("closebtn"));
 		CButtonUI *pMinBtn = (CButtonUI*)m_PaintManager.FindControl(_T("minbtn"));
@@ -106,7 +96,7 @@ void CMainFrame::Notify(TNotifyUI& msg)
 		int nSel = pHostList->GetCurSel();
 		if (nSel > -1)
 		{
-			CDuiString name;
+			CString name;
 			name.Format(_T("option_layout_%d"),nSel);
 			CVerticalLayoutUI *pOption = (CVerticalLayoutUI *)pHostList->paint_manager_.FindControl(name);
 			pOption->SetVisible(true);
@@ -126,7 +116,7 @@ bool CMainFrame::OnButtonEvent(void* param)
 
 void CMainFrame::OnClick(TNotifyUI& msg)
 {
-	CDuiString pSenderName = msg.pSender->GetName();
+	CString pSenderName = msg.pSender->GetName();
 	if (pSenderName == _T("closebtn"))
 	{
 		if (MessageBox(GetHWND(),TEXT("是否真的退出程序？将挂断所有VPN！"), TEXT("提示"), MB_YESNO | MB_ICONINFORMATION) == IDNO)
@@ -182,8 +172,8 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 	}
 	else if (pSenderName.Find(_T("editbtn")) > -1)
 	{
-		CDuiString numberstr = ToNumberChar(pSenderName);
-		int id = _wtoi(numberstr.GetData());
+		CString numberstr = ToNumberChar(pSenderName);
+		int id = _wtoi(numberstr.GetBuffer());
 		m_EditId = id;
 		Edit(id);
 	}
@@ -193,15 +183,15 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		{
 			return;
 		}
-		CDuiString numberstr = ToNumberChar(pSenderName);
-		int id = _wtoi(numberstr.GetData());
+		CString numberstr = ToNumberChar(pSenderName);
+		int id = _wtoi(numberstr.GetBuffer());
 		Del(id);
 		InitData();
 	}
 	else if (pSenderName.Find(_T("connbtn")) > -1)
 	{
-		CDuiString numberstr = ToNumberChar(pSenderName);
-		int id = _wtoi(numberstr.GetData());
+		CString numberstr = ToNumberChar(pSenderName);
+		int id = _wtoi(numberstr.GetBuffer());
 		Connect(id);
 	}
 	else if (pSenderName == _T("netsetbtn"))
@@ -210,10 +200,32 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		pTabLayout->SelectItem(0);
 		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
 		pBtn->SetTextColor(0xff1790ed);
+		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
+		pBtn->SetTextColor(0xff000000);
 		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
 		pBtn->SetTextColor(0xff000000);
 
 		CVerticalLayoutUI *pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("net_layout"));
+		pLayout->SetVisible(true);
+		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("pro_layout"));
+		pLayout->SetVisible(false);
+		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("about_layout"));
+		pLayout->SetVisible(false);
+	}
+	else if (pSenderName == _T("prosetbtn"))
+	{
+		CTabLayoutUI *pTabLayout = (CTabLayoutUI *)m_PaintManager.FindControl(_T("set_tab"));
+		pTabLayout->SelectItem(1);
+		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
+		pBtn->SetTextColor(0xff000000);
+		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
+		pBtn->SetTextColor(0xff1790ed);
+		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
+		pBtn->SetTextColor(0xff000000);
+
+		CVerticalLayoutUI *pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("net_layout"));
+		pLayout->SetVisible(false);
+		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("pro_layout"));
 		pLayout->SetVisible(true);
 		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("about_layout"));
 		pLayout->SetVisible(false);
@@ -221,12 +233,17 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 	else if (pSenderName == _T("aboutbtn"))
 	{
 		CTabLayoutUI *pTabLayout = (CTabLayoutUI *)m_PaintManager.FindControl(_T("set_tab"));
-		pTabLayout->SelectItem(1);
-		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
+		pTabLayout->SelectItem(2);
+		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
+		pBtn->SetTextColor(0xff000000);
+		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
 		pBtn->SetTextColor(0xff000000);
 		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
 		pBtn->SetTextColor(0xff1790ed);
+
 		CVerticalLayoutUI *pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("net_layout"));
+		pLayout->SetVisible(false);
+		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("pro_layout"));
 		pLayout->SetVisible(false);
 		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("about_layout"));
 		pLayout->SetVisible(true);
@@ -239,9 +256,41 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		CEditUI *pDns2 = (CEditUI *)m_PaintManager.FindControl(_T("dns2edit"));
 		char *lpszDn2 = UnicodeToLocal(CP_ACP, pDns2->GetText());
 		sprintf_s(m_Config.dns2, lpszDn2);
+		CCheckBoxUI *pCheckBoxRoute = (CCheckBoxUI *)m_PaintManager.FindControl(_T("routecheckbox"));
+		if (pCheckBoxRoute->GetCheck())
+		{
+			sprintf_s(m_Config.route, "yes");
+		}
+		else
+		{
+			sprintf_s(m_Config.route, "no");
+		}
 		delete[]lpszDn1;
 		delete[]lpszDn2;
 		SaveConfig(&m_Config);
+	}
+	else if (pSenderName == _T("recoverybtn"))
+	{
+		int ret = AddDefaultRoute();
+		wchar_t szText[1024] = { 0 };
+		
+		if (ret != NO_ERROR)
+		{
+			if (ret == ERROR_ACCESS_DENIED)
+			{
+				wsprintf(szText, TEXT("恢复路由表失败！错误代码：%d - %s ..."), ret, _T("请使用管理员权限运行本程序！"));
+				
+			}
+			else
+			{
+				wsprintf(szText, TEXT("恢复路由表失败！错误代码：%d ..."), ret);
+			}
+		}
+		else
+		{
+			wsprintf(szText, TEXT("恢复路由表成功！"));
+		}
+		m_pThis->ShowTextSetting(szText);
 	}
 }
 
@@ -290,7 +339,7 @@ void CMainFrame::InitData()
 		pInfo->crypt = crypt;
 		m_HostList[id] = pInfo;
 
-		CDuiString postion = GetPosition((char *)lpszHost);
+		CString postion = GetPosition((char *)lpszHost);
 
 		
 		wchar_t *lpwtszHost = Utf8ToUnicode(lpszHost, &dwReadByte);
@@ -360,18 +409,18 @@ void CMainFrame::InitData()
 	db.close();
 }
 
-CDuiString CMainFrame::GetPosition(char* lpIPAddr)
+CString CMainFrame::GetPosition(char* lpIPAddr)
 {
 	CIpFinder m_ipfind;
 	if (!m_ipfind.Open("qqwry.dat"))
 	{
-		return CDuiString(_T("qqwry.dat不存在"));
+		return CString(_T("qqwry.dat不存在"));
 	}
 	std::string country, location;
 	std::string aa, bb;
 	m_ipfind.GetAddressByIp(lpIPAddr, country, location);
 	m_ipfind.Close();
-	CDuiString result;
+	CString result;
 	wchar_t *lpszCountry = LocalToUnicode(936, country.c_str());
 	wchar_t *lpszLocation = LocalToUnicode(936, location.c_str());
 	result.Format(_T("%s"), lpszCountry);
@@ -458,8 +507,11 @@ void CMainFrame::Edit(int id)
 	pL2tpKey->SetText(pInfo->szL2tpKey);
 	pRemark->SetText(pInfo->remark);
 
-	SetTypeSelect(pInfo->type);
-	SetCryptSelect(pInfo->crypt);
+	//SetTypeSelect(pInfo->type);
+	//SetCryptSelect(pInfo->crypt);
+
+	pType->SelectItem(pInfo->type);
+	pCrypt->SelectItem(pInfo->crypt);
 
 	CTabLayoutUI *pTabLayout = (CTabLayoutUI *)m_PaintManager.FindControl(_T("tab_bar"));
 	pTabLayout->SelectItem(1);
@@ -469,7 +521,7 @@ void CMainFrame::SetTypeSelect(int index)
 {
 	if (index == 0)
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("typecombo_%d"), 0);
 		CListLabelElementUI *pListLabel = (CListLabelElementUI *)m_PaintManager.FindControl(name);
 		if (pListLabel)
@@ -485,7 +537,7 @@ void CMainFrame::SetTypeSelect(int index)
 	}
 	else
 	{
-		CDuiString name;
+		CString name;
 		name.Format(_T("typecombo_%d"), 0);
 		CListLabelElementUI *pListLabel = (CListLabelElementUI *)m_PaintManager.FindControl(name);
 		if (pListLabel)
@@ -504,7 +556,7 @@ void CMainFrame::SetTypeSelect(int index)
 
 void CMainFrame::SetCryptSelect(int index)
 {
-	CDuiString name;
+	CString name;
 	name.Format(_T("cryptcombo_%d"),index);
 	CListLabelElementUI *pListLabel = (CListLabelElementUI *)m_PaintManager.FindControl(name);
 	if (pListLabel)
@@ -855,8 +907,9 @@ void WINAPI CMainFrame::RasDialFunc(_In_  HRASCONN hrasconn,
 				PINFO pInfo = iter->second;
 				if (pInfo->h == hrasconn)
 				{
+					RasHangUp(pInfo->h);
 					pInfo->h = NULL;
-					CDuiString name;
+					CString name;
 					name.Format(_T("connbtn_%d"), pInfo->id);
 					CButtonUI *pConn = (CButtonUI *)m_pThis->m_PaintManager.FindControl(name);
 					pConn->SetText(_T("连接"));
@@ -952,15 +1005,46 @@ void WINAPI CMainFrame::RasDialFunc(_In_  HRASCONN hrasconn,
 		lstrcat(szText, L"子项目已断开...\n");
 		break;
 	case RASCS_Connected:
-		lstrcat(szText, L"连接已完成...\n");
+		//lstrcat(szText, L"连接已完成...\n");
 		{
 			std::map <int, PINFO>::iterator iter;
 			for (iter = m_pThis->m_HostList.begin(); iter != m_pThis->m_HostList.end(); iter++)
 			{
 				PINFO pInfo = iter->second;
+				
 				if (pInfo->h == hrasconn)
 				{
-					CDuiString name;
+					if (strcmp(m_pThis->m_Config.route, "yes") == 0)
+					{
+						char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host);
+						int ret = RemoveDefaultRoute(lpszHost);
+						delete[]lpszHost;
+						if (ret != 1)
+						{
+							lstrcat(szText, L"连接已完成！默认路由表删除失败,错误代码：");
+							wchar_t szTemp[30] = { 0 };
+							if (ret == ERROR_ACCESS_DENIED)
+							{
+								wsprintf(szTemp, L"%d,请使用管理员程序权限运行！\n", ret);
+							}
+							else
+							{
+								wsprintf(szTemp, L"%d\n", ret);
+							}
+							lstrcat(szText, szTemp);
+						}
+						else
+						{
+							lstrcat(szText, L"连接已完成！默认路由表已移除...\n");
+						}
+
+					}
+					else
+					{
+						lstrcat(szText, L"连接已完成...\n");
+					}
+
+					CString name;
 					name.Format(_T("connbtn_%d"), pInfo->id);
 					CButtonUI *pConn = (CButtonUI *)m_pThis->m_PaintManager.FindControl(name);
 					pConn->SetText(_T("断开"));
@@ -980,7 +1064,7 @@ void WINAPI CMainFrame::RasDialFunc(_In_  HRASCONN hrasconn,
 				if (pInfo->h == hrasconn)
 				{
 					pInfo->h = NULL;
-					CDuiString name;
+					CString name;
 					name.Format(_T("connbtn_%d"), pInfo->id);
 					CButtonUI *pConn = (CButtonUI *)m_pThis->m_PaintManager.FindControl(name);
 					pConn->SetText(_T("连接"));
@@ -1001,7 +1085,7 @@ void CMainFrame::Connect(int id)
 {
 
 	PINFO pInfo = m_HostList[id];
-	CDuiString name;
+	CString name;
 	name.Format(_T("connbtn_%d"), id);
 	CButtonUI *pConn = (CButtonUI *)m_PaintManager.FindControl(name);
 	if (pInfo->h == NULL)
@@ -1016,10 +1100,10 @@ void CMainFrame::Connect(int id)
 			if (m_bXp)
 			{
 				char *lpszName = UnicodeToLocal(CP_ACP, szName);
-				char *lpszUser = UnicodeToLocal(CP_ACP, pInfo->user.GetData());
-				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetData());
-				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetData());
-				char *lpszL2tpkey = UnicodeToLocal(CP_ACP, pInfo->szL2tpKey.GetData());
+				char *lpszUser = UnicodeToLocal(CP_ACP, pInfo->user.GetBuffer());
+				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetBuffer());
+				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetBuffer());
+				char *lpszL2tpkey = UnicodeToLocal(CP_ACP, pInfo->szL2tpKey.GetBuffer());
 				ret = ConnectionL2tpVPNXP(lpszName, lpszUser, lpszPass, lpszHost, lpszL2tpkey, &pInfo->h, pInfo->crypt);
 				delete[]lpszName;
 				delete[]lpszUser;
@@ -1029,7 +1113,7 @@ void CMainFrame::Connect(int id)
 			}
 			else
 			{
-				ret = ConnectionL2tpVPN(szName, pInfo->user.GetData(), pInfo->pass.GetData(), pInfo->host.GetData(), pInfo->szL2tpKey.GetData(), &pInfo->h, pInfo->crypt);
+				ret = ConnectionL2tpVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), pInfo->szL2tpKey.GetBuffer(), &pInfo->h, pInfo->crypt);
 			}
 				
 		}
@@ -1038,9 +1122,9 @@ void CMainFrame::Connect(int id)
 			if (m_bXp)
 			{
 				char *lpszName = UnicodeToLocal(CP_ACP, szName);
-				char *lpszUser = UnicodeToLocal(CP_ACP, pInfo->user.GetData());
-				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetData());
-				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetData());
+				char *lpszUser = UnicodeToLocal(CP_ACP, pInfo->user.GetBuffer());
+				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetBuffer());
+				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetBuffer());
 				ret = ConnectionVPNXP(lpszName, lpszUser, lpszPass, lpszHost, &pInfo->h, pInfo->crypt);
 				delete[]lpszName;
 				delete[]lpszUser;
@@ -1049,7 +1133,7 @@ void CMainFrame::Connect(int id)
 			}
 			else
 			{
-				ret = ConnectionVPN(szName, pInfo->user.GetData(), pInfo->pass.GetData(), pInfo->host.GetData(),&pInfo->h, pInfo->crypt);
+				ret = ConnectionVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), &pInfo->h, pInfo->crypt);
 			}
 		}
 
@@ -1089,7 +1173,11 @@ void CMainFrame::ShowText(LPCTSTR szText)
 	pShowText->SetText(szText);
 }
 
-
+void CMainFrame::ShowTextSetting(LPCTSTR szText)
+{
+	CLabelUI *pShowText = (CEditUI *)m_PaintManager.FindControl(_T("textshow2"));
+	pShowText->SetText(szText);
+}
 
 void CMainFrame::SaveConfig(PCONFIG pConfig)
 {
@@ -1098,6 +1186,7 @@ void CMainFrame::SaveConfig(PCONFIG pConfig)
 	lstrcatA(szPath, "\\yvpn.conf");
 	WritePrivateProfileStringA("NETWORK", "dns1", pConfig->dns1, szPath);
 	WritePrivateProfileStringA("NETWORK", "dns2", pConfig->dns2, szPath);
+	WritePrivateProfileStringA("PRO", "route", pConfig->route, szPath);
 }
 
 void CMainFrame::ReadConfig(PCONFIG pConfig)
@@ -1107,4 +1196,5 @@ void CMainFrame::ReadConfig(PCONFIG pConfig)
 	lstrcatA(szPath, "\\yvpn.conf");
 	GetPrivateProfileStringA(("NETWORK"), ("dns1"), ("8.8.8.8"), pConfig->dns1, MAX_PATH, szPath);
 	GetPrivateProfileStringA(("NETWORK"), ("dns2"), ("8.8.4.4"), pConfig->dns2, MAX_PATH, szPath);
+	GetPrivateProfileStringA(("PRO"), ("route"), ("yes"), pConfig->route, MAX_PATH, szPath);
 }

@@ -45,9 +45,9 @@ char* UnicodeToLocal(UINT nCodePage, const wchar_t* szText)
 	return pBuffer;
 }
 
-CDuiString ToNumberChar(CDuiString lpszText)
+CString ToNumberChar(CString lpszText)
 {
-	CDuiString result;
+	CString result;
 	for (int i = 0; i < lpszText.GetLength();i++)
 	{
 		TCHAR a = lpszText.GetAt(i);

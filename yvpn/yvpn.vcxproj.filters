@@ -54,6 +54,9 @@
     <ClInclude Include="IpFinder.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="route.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IpFinder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="route.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

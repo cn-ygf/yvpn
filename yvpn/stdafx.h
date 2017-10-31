@@ -8,6 +8,7 @@
 #include "targetver.h"
 
 // Windows м╥нд╪Ч: 
+#include <afxwin.h>
 #include <WinSock2.h>
 #include <windows.h>
 #include <Ras.h>

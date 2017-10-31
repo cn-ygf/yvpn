@@ -6,30 +6,30 @@ class CHostItemUI :
 public:
 	CHostItemUI();
 	~CHostItemUI();
-	CDuiString GetHost();
-	CDuiString GetTypeText();
-	CDuiString GetRemark();
-	CDuiString GetUsername();
-	CDuiString GetPassword();
-	CDuiString GetIpSecKey();
+	CString GetHost();
+	CString GetTypeText();
+	CString GetRemark();
+	CString GetUsername();
+	CString GetPassword();
+	CString GetIpSecKey();
 	int GetType();
 
-	void SetHost(CDuiString szText);
-	void SetTypeText(CDuiString szText);
-	void SetRemark(CDuiString szText);
-	void SetUsername(CDuiString szText);
-	void SetPassword(CDuiString szText);
-	void SetIpSecKey(CDuiString szText);
+	void SetHost(CString szText);
+	void SetTypeText(CString szText);
+	void SetRemark(CString szText);
+	void SetUsername(CString szText);
+	void SetPassword(CString szText);
+	void SetIpSecKey(CString szText);
 	void SetType(int type);
 
 	void UpdateData();
 private:
-	CDuiString m_Host;
-	CDuiString m_TypeText;
-	CDuiString m_Remark;
-	CDuiString m_Username;
-	CDuiString m_Password;
-	CDuiString m_IpSecKey;
+	CString m_Host;
+	CString m_TypeText;
+	CString m_Remark;
+	CString m_Username;
+	CString m_Password;
+	CString m_IpSecKey;
 	int m_Type;
 };
 

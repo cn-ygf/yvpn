@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Window size="600,500" caption="0,0,0,27">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Window size="600,500" sizebox="4,4,4,4" caption="0,0,0,27" showshadow="true" shadowimage="shadow.png" shadowcorner="23,13,23,33">
 	<Font id="0" name="微软雅黑" size="16"/>
 	<Font id="1" name="微软雅黑" size="12"/>
-	<Font id="3" name="微软雅黑" size="15"/>
+	<Font id="2" name="微软雅黑" size="12"/>
+	<Default shared="true" name="CheckBox" value="textcolor=&quot;#FFbac0c5&quot; hottextcolor=&quot;#FF386382&quot; selectedtextcolor=&quot;#FF386382&quot; disabledtextcolor=&quot;#FFbac0c5&quot; textpadding=&quot;20,2,0,0&quot; align=&quot;left&quot; selectedimage=&quot;file='checked.png' dest='0,2,16,18'&quot; normalimage=&quot;file='unchecked.png' dest='0,2,16,18'&quot;" />
 	<HorizontalLayout>
 		<VerticalLayout pos="0,0,60,0" bkcolor="#FF1790ED" bordercolor="#FFDAD7D6">
 			<VerticalLayout pos="0,0,0,64">
@@ -19,7 +20,7 @@
 			</VerticalLayout>
 			<VerticalLayout />
 			<VerticalLayout pos="0,0,0,50">
-				<Button name="menubtn" pos="0,0,50,50" padding="5,0,0,0" font="1" normalimage="file='menu.png' source='0,0,30,30'" hotimage="file='' source='30,0,60,30'" pushedimage="file='' source='60,0,90,30'"/>
+				<Button name="menubtn" pos="0,0,50,50" padding="5,0,0,0" font="1" normalimage="file='menu.png' source='0,0,30,30'" hotimage="file='menu.png' source='30,0,60,30'" pushedimage="file='menu.png' source='60,0,90,30'"/>
 			</VerticalLayout>
 		</VerticalLayout>
 		<VerticalLayout bkcolor="#FFF5F5F5">
@@ -32,7 +33,7 @@
 			</HorizontalLayout>
 			<TabLayout name="tab_bar" selectedid="0">
 				<VerticalLayout>
-					<HostList padding="0,0,2,0" name="hosts" header="hidden" itemshowhtml="true" vscrollbar="true" itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" vscrollbarstyle="thumbnormalimage=&quot;file='scrollbar_group_normal.png' corner=&apos;2,3,2,3&apos;&quot; thumbhotimage=&quot;file='scrollbar_group_hover.png' corner=&apos;2,3,2,3&apos;&quot; width=&quot;7&quot;" />
+					<HostList padding="0,0,2,0" name="hosts" header="hidden" itemshowhtml="false" vscrollbar="true" itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" vscrollbarstyle="showbutton1=&quot;false&quot; showbutton2=&quot;false&quot; thumbnormalimage=&quot;file='scrollbar_group_normal.png' corner=&apos;2,3,2,3&apos;&quot; thumbhotimage=&quot;file='scrollbar_group_hover.png' corner=&apos;2,3,2,3&apos;&quot; width=&quot;7&quot;" />
 					<VerticalLayout height="30">
 						<Label padding="5,8,0,0" name="textshow" text="就绪" textcolor="#FF999999"/>
 					</VerticalLayout>
@@ -70,23 +71,39 @@
 						<VerticalLayout width="80">
 							<Button name="netsetbtn" font="3" text="网络设置" width="60"  padding="18,0,0,0" selected="true" textcolor="FF1790ED" hottextcolor="FF1790ED"/>
 							<Control height="5"/>
-							<Button name="aboutbtn" font="3" text="关于VPN" width="60"  padding="18,0,0,0"  hottextcolor="FF1790ED"/>
+							<Button name="prosetbtn" font="3" text="高级设置" width="60"  padding="18,0,0,0" hottextcolor="FF1790ED" />
+							<Control height="5"/>
+							<Button name="aboutbtn" font="3" text="关于YVPN" width="60"  padding="18,0,0,0"  hottextcolor="FF1790ED"/>
 							<Control height="5"/>
 						</VerticalLayout>
 						<VerticalLayout padding="10,0,0,0" width="1" bkcolor="FFE3E3E3" />
-						<VerticalLayout name="net_layout" padding="-1,5,0,0" width="2" height="20" bkcolor="FF1790ED" />
+						<VerticalLayout name="net_layout" padding="-2,5,0,0" width="2" height="20" bkcolor="FF1790ED" />
+						<VerticalLayout name="pro_layout" padding="-2,25,0,0" width="2" height="20" bkcolor="FF1790ED" visible="false" />
 						<VerticalLayout name="about_layout" padding="-2,38,0,0" width="2" height="20" bkcolor="FF1790ED" visible="false" />
 						<TabLayout name="set_tab" selectedid="0" padding="10,0,20,0">
 							<VerticalLayout>
-								<Text padding="0,10,0,0" pos="0,0,0,0" text="DNS1" font="4"/>
+								<Text padding="0,10,0,0" height="18" text="DNS1" font="4"/>
 								<Edit name="dns1edit" text="8.8.8.8" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
-								<Text padding="0,10,0,0" pos="0,0,0,0" text="DNS2" font="4"/>
+								<Text padding="0,10,0,0" height="18" text="DNS2" font="4"/>
 								<Edit name="dns2edit" text="8.8.4.4" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
 								<Button name="save2btn" padding="2,10,0,0" pos="0,0,60,25" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
 							</VerticalLayout>
 							<VerticalLayout>
-								<Text padding="0,10,0,0" text="版本信息    YVPN 3.0.2 beta" font="4"/>
-								<Text padding="0,10,0,0" text="2015-2017 (c) YGF <ygf@cnhonker.com>" font="4"/>
+								<HorizontalLayout height="20">
+									<CheckBox name="routecheckbox" width="20" height="20" />
+									<Text padding="0,3,0,0" pos="0,0,0,0" text="拨号成功自动删除路由表" font="4"/>
+								</HorizontalLayout>
+								<HorizontalLayout height="30" padding="0,10,0,0">
+									<Button name="save2btn" padding="2,0,0,0" pos="0,0,60,25" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+									<Button name="recoverybtn" padding="2,0,0,0" pos="0,0,60,25" text="恢复路由" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
+								</HorizontalLayout>
+								<VerticalLayout>
+									<Label padding="2,2,0,0" name="textshow2" textcolor="#FF999999"/>
+								</VerticalLayout>
+							</VerticalLayout>
+							<VerticalLayout>
+								<Text padding="0,10,0,0" height="20" text="版本信息    YVPN 3.0.4 beta" font="4"/>
+								<Text padding="0,10,0,0" height="20" text="2015-2017 (c) YGF <ygf@cnhonker.com>" font="4"/>
 							</VerticalLayout>
 						</TabLayout>
 					</HorizontalLayout>
