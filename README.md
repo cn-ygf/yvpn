@@ -10,7 +10,7 @@
     使用vs2013或其它版本打开sln 编译
 
 #### 二进制下载
-    [yvpn-releases](https://github.com/cn-ygf/yvpn/releases)
+### [yvpn v3.0.5.beta.zip](https://github.com/cn-ygf/yvpn/releases)
 
 ### 感谢 [duilib](http://github.com/duilib/duilib).
 ### 感谢 [DuiLib_Redrain](https://github.com/redrains/DuiLib_Redrain).
