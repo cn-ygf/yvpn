@@ -17,7 +17,6 @@ typedef struct _CONFIG
 {
 	char dns1[16];
 	char dns2[16];
-	char  route[20];
 }CONFIG, *PCONFIG;
 
 class CMainFrame:

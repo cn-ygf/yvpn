@@ -1,0 +1,37 @@
+﻿生成启动时间为 2018/8/29 16:02:08。
+     1>项目“E:\Code\yvpn\yvpn\yvpn.vcxproj”在节点 2 上(Build 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\yvpn.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+     1>e:\code\yvpn\yvpn\Resource.h(15): warning C4005: “IDC_STATIC”: 宏重定义
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include\afxres.h(342) : 参见“IDC_STATIC”的前一个定义
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\yvpn.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CppSQLite3.cpp hostlistitem.cpp IpFinder.cpp mainframe.cpp unit.cpp yvpn.cpp
+         CppSQLite3.cpp
+         hostlistitem.cpp
+         IpFinder.cpp
+         mainframe.cpp
+         unit.cpp
+         yvpn.cpp
+         正在生成代码...
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt sqlite3.c
+         sqlite3.c
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin\rc.exe /D _USING_V110_SDK71_ /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\yvpn.res" yvpn.rc 
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\yvpn.exe" /INCREMENTAL:NO /NOLOGO Rasapi32.lib duilib.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"..\bin\yvpn.pdb" /SUBSYSTEM:WINDOWS,"5.01" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\yvpn.lib" /MACHINE:X86 /SAFESEH Release\yvpn.res
+         Release\CppSQLite3.obj
+         Release\hostlistitem.obj
+         Release\IpFinder.obj
+         Release\mainframe.obj
+         Release\sqlite3.obj
+         Release\stdafx.obj
+         Release\unit.obj
+         Release\yvpn.obj
+         LINK : 已指定 /LTCG，但不需要生成代码；从链接命令行中移除 /LTCG 以提高链接器性能
+         yvpn.vcxproj -> E:\Code\yvpn\yvpn\..\bin\yvpn.exe
+     1>已完成生成项目“E:\Code\yvpn\yvpn\yvpn.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:06.77

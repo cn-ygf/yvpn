@@ -33,7 +33,7 @@
 			</HorizontalLayout>
 			<TabLayout name="tab_bar" selectedid="0">
 				<VerticalLayout>
-					<HostList padding="0,0,2,0" name="hosts" header="hidden" itemshowhtml="false" vscrollbar="true" itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" vscrollbarstyle="showbutton1=&quot;false&quot; showbutton2=&quot;false&quot; thumbnormalimage=&quot;file='scrollbar_group_normal.png' corner=&apos;2,3,2,3&apos;&quot; thumbhotimage=&quot;file='scrollbar_group_hover.png' corner=&apos;2,3,2,3&apos;&quot; width=&quot;7&quot;" />
+					<ListEx padding="0,0,2,0" name="hosts" header="hidden" itemshowhtml="false" vscrollbar="true" itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" vscrollbarstyle="showbutton1=&quot;false&quot; showbutton2=&quot;false&quot; thumbnormalimage=&quot;file='scrollbar_group_normal.png' corner=&apos;2,3,2,3&apos;&quot; thumbhotimage=&quot;file='scrollbar_group_hover.png' corner=&apos;2,3,2,3&apos;&quot; width=&quot;7&quot;" />
 					<VerticalLayout height="30">
 						<Label padding="5,8,0,0" name="textshow" text="就绪" textcolor="#FF999999"/>
 					</VerticalLayout>
@@ -71,8 +71,6 @@
 						<VerticalLayout width="80">
 							<Button name="netsetbtn" font="3" text="网络设置" width="60"  padding="18,0,0,0" selected="true" textcolor="FF1790ED" hottextcolor="FF1790ED"/>
 							<Control height="5"/>
-							<Button name="prosetbtn" font="3" text="高级设置" width="60"  padding="18,0,0,0" hottextcolor="FF1790ED" />
-							<Control height="5"/>
 							<Button name="aboutbtn" font="3" text="关于YVPN" width="60"  padding="18,0,0,0"  hottextcolor="FF1790ED"/>
 							<Control height="5"/>
 						</VerticalLayout>
@@ -93,16 +91,12 @@
 									<CheckBox name="routecheckbox" width="20" height="20" />
 									<Text padding="0,3,0,0" pos="0,0,0,0" text="拨号成功自动删除路由表" font="4"/>
 								</HorizontalLayout>
-								<HorizontalLayout height="30" padding="0,10,0,0">
-									<Button name="save2btn" padding="2,0,0,0" pos="0,0,60,25" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
-									<Button name="recoverybtn" padding="2,0,0,0" pos="0,0,60,25" text="恢复路由" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
-								</HorizontalLayout>
 								<VerticalLayout>
 									<Label padding="2,2,0,0" name="textshow2" textcolor="#FF999999"/>
 								</VerticalLayout>
 							</VerticalLayout>
 							<VerticalLayout>
-								<Text padding="0,10,0,0" height="20" text="版本信息    YVPN 3.0.4 beta" font="4"/>
+								<Text padding="0,10,0,0" height="20" text="版本信息    YVPN 3.0.5 beta" font="4"/>
 								<Text padding="0,10,0,0" height="20" text="2015-2017 (c) YGF <ygf@cnhonker.com>" font="4"/>
 							</VerticalLayout>
 						</TabLayout>
@@ -112,4 +106,3 @@
 		</VerticalLayout>
 	</HorizontalLayout>
 </Window>
-

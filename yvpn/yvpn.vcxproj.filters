@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -39,22 +36,13 @@
     <ClInclude Include="sqlite3.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="hostitemui.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="hostlistui.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="node.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="unit.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IpFinder.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="route.h">
+    <ClInclude Include="hostlistitem.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,22 +59,16 @@
     <ClCompile Include="mainframe.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="hostitemui.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="hostlistui.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="node.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="unit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IpFinder.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="route.cpp">
+    <ClCompile Include="hostlistitem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,7 +22,8 @@
 #include <map>
 
 // TODO:  在此处引用程序需要的其他头文件
-#include <DuiLib/UIlib.h>
+#include "Resource.h"
+#include "../DuiLib/UIlib.h"
 using namespace DuiLib;
 
 #define MAX max

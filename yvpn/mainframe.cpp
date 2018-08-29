@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "mainframe.h"
-#include "hostlistui.h"
+#include "hostlistitem.h"
 #include "CppSQLite3.h"
 #include "unit.h"
 #include "IpFinder.h"
-#include "route.h"
 
 
 CMainFrame *m_pThis = NULL;
@@ -40,10 +39,6 @@ LPCTSTR	CMainFrame::GetWindowClassName() const
 
 CControlUI* CMainFrame::CreateControl(LPCTSTR pstrClass)
 {
-	if (_tcsicmp(pstrClass, _T("HostList")) == 0)
-	{
-		return new CHostListUI(m_PaintManager);
-	}
 	return NULL;
 }
 
@@ -52,6 +47,8 @@ void CMainFrame::Notify(TNotifyUI& msg)
 	CString SenderName = msg.pSender->GetName();
 	if (msg.sType == _T("windowinit"))
 	{
+		this->SetIcon(IDI_YVPN);
+
 		ReadConfig(&m_Config);
 		CEditUI *pDns1 = (CEditUI *)m_PaintManager.FindControl(_T("dns1edit"));
 		wchar_t *lpszDn1 = LocalToUnicode(CP_ACP, m_Config.dns1);
@@ -61,11 +58,6 @@ void CMainFrame::Notify(TNotifyUI& msg)
 		pDns2->SetText(lpszDn2);
 		delete[]lpszDn1;
 		delete[]lpszDn2;
-		if (strcmp(m_Config.route,"yes") == 0)
-		{
-			CCheckBoxUI *pCheckBoxRoute = (CCheckBoxUI *)m_PaintManager.FindControl(_T("routecheckbox"));
-			pCheckBoxRoute->SetCheck(true);
-		}
 		m_bXp = FALSE;
 		OSVERSIONINFOEX os = { 0 };
 		os.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -162,7 +154,7 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 	}
 	else if (pSenderName == _T("delbtn"))
 	{
-		CHostListUI* pHostList = (CHostListUI *)(m_PaintManager.FindControl(_T("hosts")));
+		CListExUI* pHostList = (CListExUI *)(m_PaintManager.FindControl(_T("hosts")));
 		int nSel = pHostList->GetCurSel();
 		int afd = 0;
 	}
@@ -200,8 +192,6 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		pTabLayout->SelectItem(0);
 		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
 		pBtn->SetTextColor(0xff1790ed);
-		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
-		pBtn->SetTextColor(0xff000000);
 		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
 		pBtn->SetTextColor(0xff000000);
 
@@ -209,24 +199,6 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		pLayout->SetVisible(true);
 		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("pro_layout"));
 		pLayout->SetVisible(false);
-		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("about_layout"));
-		pLayout->SetVisible(false);
-	}
-	else if (pSenderName == _T("prosetbtn"))
-	{
-		CTabLayoutUI *pTabLayout = (CTabLayoutUI *)m_PaintManager.FindControl(_T("set_tab"));
-		pTabLayout->SelectItem(1);
-		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
-		pBtn->SetTextColor(0xff000000);
-		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
-		pBtn->SetTextColor(0xff1790ed);
-		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
-		pBtn->SetTextColor(0xff000000);
-
-		CVerticalLayoutUI *pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("net_layout"));
-		pLayout->SetVisible(false);
-		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("pro_layout"));
-		pLayout->SetVisible(true);
 		pLayout = (CVerticalLayoutUI *)m_PaintManager.FindControl(_T("about_layout"));
 		pLayout->SetVisible(false);
 	}
@@ -234,9 +206,7 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 	{
 		CTabLayoutUI *pTabLayout = (CTabLayoutUI *)m_PaintManager.FindControl(_T("set_tab"));
 		pTabLayout->SelectItem(2);
-		CButtonUI *pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("prosetbtn"));
-		pBtn->SetTextColor(0xff000000);
-		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
+		CButtonUI * pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("netsetbtn"));
 		pBtn->SetTextColor(0xff000000);
 		pBtn = (CButtonUI *)m_PaintManager.FindControl(_T("aboutbtn"));
 		pBtn->SetTextColor(0xff1790ed);
@@ -256,48 +226,16 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		CEditUI *pDns2 = (CEditUI *)m_PaintManager.FindControl(_T("dns2edit"));
 		char *lpszDn2 = UnicodeToLocal(CP_ACP, pDns2->GetText());
 		sprintf_s(m_Config.dns2, lpszDn2);
-		CCheckBoxUI *pCheckBoxRoute = (CCheckBoxUI *)m_PaintManager.FindControl(_T("routecheckbox"));
-		if (pCheckBoxRoute->GetCheck())
-		{
-			sprintf_s(m_Config.route, "yes");
-		}
-		else
-		{
-			sprintf_s(m_Config.route, "no");
-		}
 		delete[]lpszDn1;
 		delete[]lpszDn2;
 		SaveConfig(&m_Config);
-	}
-	else if (pSenderName == _T("recoverybtn"))
-	{
-		int ret = AddDefaultRoute();
-		wchar_t szText[1024] = { 0 };
-		
-		if (ret != NO_ERROR)
-		{
-			if (ret == ERROR_ACCESS_DENIED)
-			{
-				wsprintf(szText, TEXT("恢复路由表失败！错误代码：%d - %s ..."), ret, _T("请使用管理员权限运行本程序！"));
-				
-			}
-			else
-			{
-				wsprintf(szText, TEXT("恢复路由表失败！错误代码：%d ..."), ret);
-			}
-		}
-		else
-		{
-			wsprintf(szText, TEXT("恢复路由表成功！"));
-		}
-		m_pThis->ShowTextSetting(szText);
 	}
 }
 
 
 void CMainFrame::InitData()
 {
-	CHostListUI* pHostList = (CHostListUI *)(m_PaintManager.FindControl(_T("hosts")));
+	CListExUI* pHostList = (CListExUI *)(m_PaintManager.FindControl(_T("hosts")));
 	if (pHostList->GetCount() > 0)
 	{
 		pHostList->RemoveAll();
@@ -344,7 +282,7 @@ void CMainFrame::InitData()
 		
 		wchar_t *lpwtszHost = Utf8ToUnicode(lpszHost, &dwReadByte);
 		pInfo->host.Append(lpwtszHost);
-		CHostListItem item;
+		CHostListItem item(m_PaintManager);
 		item.SetId(id);
 		item.SetIndex(i);
 		item.SetHostText(lpwtszHost);
@@ -399,7 +337,7 @@ void CMainFrame::InitData()
 		{
 			item.SetLogoText(_T("china.png"));
 		}
-		
+		item.UpdateData(TRUE);
 		pHostList->AddNode(&item, NULL);
 
 		query.nextRow();
@@ -506,9 +444,6 @@ void CMainFrame::Edit(int id)
 	pPassword->SetText(pInfo->pass);
 	pL2tpKey->SetText(pInfo->szL2tpKey);
 	pRemark->SetText(pInfo->remark);
-
-	//SetTypeSelect(pInfo->type);
-	//SetCryptSelect(pInfo->crypt);
 
 	pType->SelectItem(pInfo->type);
 	pCrypt->SelectItem(pInfo->crypt);
@@ -1014,35 +949,7 @@ void WINAPI CMainFrame::RasDialFunc(_In_  HRASCONN hrasconn,
 				
 				if (pInfo->h == hrasconn)
 				{
-					if (strcmp(m_pThis->m_Config.route, "yes") == 0)
-					{
-						char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host);
-						int ret = RemoveDefaultRoute(lpszHost);
-						delete[]lpszHost;
-						if (ret != 1)
-						{
-							lstrcat(szText, L"连接已完成！默认路由表删除失败,错误代码：");
-							wchar_t szTemp[30] = { 0 };
-							if (ret == ERROR_ACCESS_DENIED)
-							{
-								wsprintf(szTemp, L"%d,请使用管理员程序权限运行！\n", ret);
-							}
-							else
-							{
-								wsprintf(szTemp, L"%d\n", ret);
-							}
-							lstrcat(szText, szTemp);
-						}
-						else
-						{
-							lstrcat(szText, L"连接已完成！默认路由表已移除...\n");
-						}
-
-					}
-					else
-					{
-						lstrcat(szText, L"连接已完成...\n");
-					}
+					lstrcat(szText, L"连接已完成...\n");
 
 					CString name;
 					name.Format(_T("connbtn_%d"), pInfo->id);
@@ -1186,7 +1093,6 @@ void CMainFrame::SaveConfig(PCONFIG pConfig)
 	lstrcatA(szPath, "\\yvpn.conf");
 	WritePrivateProfileStringA("NETWORK", "dns1", pConfig->dns1, szPath);
 	WritePrivateProfileStringA("NETWORK", "dns2", pConfig->dns2, szPath);
-	WritePrivateProfileStringA("PRO", "route", pConfig->route, szPath);
 }
 
 void CMainFrame::ReadConfig(PCONFIG pConfig)
@@ -1196,5 +1102,4 @@ void CMainFrame::ReadConfig(PCONFIG pConfig)
 	lstrcatA(szPath, "\\yvpn.conf");
 	GetPrivateProfileStringA(("NETWORK"), ("dns1"), ("8.8.8.8"), pConfig->dns1, MAX_PATH, szPath);
 	GetPrivateProfileStringA(("NETWORK"), ("dns2"), ("8.8.4.4"), pConfig->dns2, MAX_PATH, szPath);
-	GetPrivateProfileStringA(("PRO"), ("route"), ("yes"), pConfig->route, MAX_PATH, szPath);
 }
