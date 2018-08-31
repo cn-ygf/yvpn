@@ -17,6 +17,7 @@ typedef struct _CONFIG
 {
 	char dns1[16];
 	char dns2[16];
+	DWORD dwMode;
 }CONFIG, *PCONFIG;
 
 class CMainFrame:
@@ -45,10 +46,10 @@ private:
 	int Del(int id);
 	CString GetPosition(char* lpszIpAddr);
 	int m_EditId;
-	int ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost,LPHRASCONN h, DWORD crypt);
-	int ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* lpHost, LPHRASCONN h, DWORD crypt);
-	int ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, char * lpHost, char * lpL2tpKey, LPHRASCONN h, DWORD crypt);
-	int ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPCWSTR lpL2tpKey, LPHRASCONN h, DWORD crypt);
+	int ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPHRASCONN h, DWORD crypt, DWORD mode);
+	int ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* lpHost, LPHRASCONN h, DWORD crypt, DWORD mode);
+	int ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, char * lpHost, char * lpL2tpKey, LPHRASCONN h, DWORD crypt, DWORD mode);
+	int ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPCWSTR lpL2tpKey, LPHRASCONN h, DWORD crypt, DWORD mode);
 	static void WINAPI RasDialFunc(_In_  HRASCONN hrasconn,
 		_In_  UINT unMsg,
 		_In_  RASCONNSTATE rascs,

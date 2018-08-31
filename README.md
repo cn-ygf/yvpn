@@ -10,7 +10,7 @@
     使用vs2013或其它版本打开sln 编译
 
 #### 二进制下载
-### [yvpn v3.0.5.beta.zip](https://github.com/cn-ygf/yvpn/releases)
+### [yvpn v3.0.6.beta.zip](https://github.com/cn-ygf/yvpn/releases)
 
 ### 感谢 [duilib](http://github.com/duilib/duilib).
 ### 感谢 [DuiLib_Redrain](https://github.com/redrains/DuiLib_Redrain).
@@ -50,6 +50,11 @@
     3、使用官方sqlite源文件
     4、删除路由表功能
     5、删除hostlist控件使用listex
+
+    yvpn 3.0.6 beta
+    20180831
+    1、修复外观错位
+    2、增加局部网络模式
 
 ![无法显示](https://github.com/cn-ygf/yvpn/raw/master/bin/1.png)
 ![无法显示](https://github.com/cn-ygf/yvpn/raw/master/bin/2.png)

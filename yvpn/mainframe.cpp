@@ -58,6 +58,9 @@ void CMainFrame::Notify(TNotifyUI& msg)
 		pDns2->SetText(lpszDn2);
 		delete[]lpszDn1;
 		delete[]lpszDn2;
+		CComboUI *pMode = (CComboUI *)m_PaintManager.FindControl(_T("networkmode"));
+		pMode->SelectItem(m_Config.dwMode);
+
 		m_bXp = FALSE;
 		OSVERSIONINFOEX os = { 0 };
 		os.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -228,6 +231,8 @@ void CMainFrame::OnClick(TNotifyUI& msg)
 		sprintf_s(m_Config.dns2, lpszDn2);
 		delete[]lpszDn1;
 		delete[]lpszDn2;
+		CComboUI *pMode = (CComboUI *)m_PaintManager.FindControl(_T("networkmode"));
+		m_Config.dwMode = pMode->GetCurSel();
 		SaveConfig(&m_Config);
 	}
 }
@@ -558,7 +563,7 @@ void CMainFrame::ClearControl()
 	pRemark->SetText(_T(""));
 }
 
-int CMainFrame::ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* lpHost, LPHRASCONN h, DWORD crypt)
+int CMainFrame::ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* lpHost, LPHRASCONN h, DWORD crypt, DWORD mode)
 {
 	RASENTRYA re;
 	RASCREDENTIALSA rc;
@@ -575,7 +580,17 @@ int CMainFrame::ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* 
 	re.dwDialMode = RASEDM_DialAll;
 	re.dwEncryptionType = crypt;//加密方式;
 	re.dwfNetProtocols = RASNP_Ip;
-	re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	//re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	if (mode == 0)//网络模式
+	{
+		//局部模式
+		re.dwfOptions = RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
+	else
+	{
+		//全局模式
+		re.dwfOptions = RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
 	re.dwfOptions2 = RASEO2_ReconnectIfDropped | RASEO2_DontNegotiateMultilink;
 	re.dwFramingProtocol = RASFP_Ppp;
 	re.dwHangUpExtraPercent = 10;
@@ -620,7 +635,7 @@ int CMainFrame::ConnectionVPNXP(char* lpName, char* lpUser, char* lpPass, char* 
 	return dwResult;
 }
 
-int CMainFrame::ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPHRASCONN h, DWORD crypt)
+int CMainFrame::ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPHRASCONN h, DWORD crypt, DWORD mode)
 {
 	RASENTRY re;
 	RASCREDENTIALS rc;
@@ -637,7 +652,17 @@ int CMainFrame::ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LP
 	re.dwDialMode = RASEDM_DialAll;
 	re.dwEncryptionType = crypt;//加密方式;
 	re.dwfNetProtocols = RASNP_Ip;
-	re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	//re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	if (mode == 0)//网络模式
+	{
+		//局部模式
+		re.dwfOptions = RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
+	else
+	{
+		//全局模式
+		re.dwfOptions = RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
 	re.dwfOptions2 = RASEO2_ReconnectIfDropped | RASEO2_DontNegotiateMultilink;
 	re.dwFramingProtocol = RASFP_Ppp;
 	re.dwHangUpExtraPercent = 10;
@@ -683,7 +708,7 @@ int CMainFrame::ConnectionVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LP
 	return dwResult;
 }
 
-int CMainFrame::ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, char * lpHost, char * lpL2tpKey, LPHRASCONN h, DWORD crypt)
+int CMainFrame::ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, char * lpHost, char * lpL2tpKey, LPHRASCONN h, DWORD crypt, DWORD mode)
 {
 	RASENTRYA re;
 	RASCREDENTIALSA rc;
@@ -700,7 +725,17 @@ int CMainFrame::ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, 
 	re.dwDialMode = RASEDM_DialAll;
 	re.dwEncryptionType = crypt;//加密方式;
 	re.dwfNetProtocols = RASNP_Ip;
-	re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	//re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	if (mode == 0)//网络模式
+	{
+		//局部模式
+		re.dwfOptions = RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
+	else
+	{
+		//全局模式
+		re.dwfOptions = RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
 	re.dwfOptions2 = RASEO2_ReconnectIfDropped | RASEO2_DontNegotiateMultilink | RASEO2_UsePreSharedKey;
 	re.dwFramingProtocol = RASFP_Ppp;
 	re.dwHangUpExtraPercent = 10;
@@ -751,7 +786,7 @@ int CMainFrame::ConnectionL2tpVPNXP(char *lpName, char * lpUser, char * lpPass, 
 	return dwResult;
 }
 
-int CMainFrame::ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPCWSTR lpL2tpKey, LPHRASCONN h, DWORD crypt)
+int CMainFrame::ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass, LPCWSTR lpHost, LPCWSTR lpL2tpKey, LPHRASCONN h, DWORD crypt,DWORD mode)
 {
 	RASENTRY re;
 	RASCREDENTIALS rc;
@@ -768,7 +803,17 @@ int CMainFrame::ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass
 	re.dwDialMode = RASEDM_DialAll;
 	re.dwEncryptionType = crypt;//加密方式;
 	re.dwfNetProtocols = RASNP_Ip;
-	re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	//re.dwfOptions = RASEO_ModemLights | RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	if (mode == 0)//网络模式
+	{
+		//局部模式
+		re.dwfOptions = RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
+	else
+	{
+		//全局模式
+		re.dwfOptions = RASEO_RemoteDefaultGateway | RASEO_SpecificNameServers | RASEO_ShowDialingProgress;
+	}
 	re.dwfOptions2 = RASEO2_ReconnectIfDropped | RASEO2_DontNegotiateMultilink | RASEO2_UsePreSharedKey;
 	re.dwFramingProtocol = RASFP_Ppp;
 	re.dwHangUpExtraPercent = 10;
@@ -778,6 +823,7 @@ int CMainFrame::ConnectionL2tpVPN(LPCWSTR lpName, LPCWSTR lpUser, LPCWSTR lpPass
 	re.dwRedialPause = 60;
 	re.dwType = RASET_Vpn;
 	re.dwVpnStrategy = VS_L2tpOnly;
+	//re.dwIPv4InterfaceMetric = 1000;
 	unsigned long  dns, dns2;
 	dns = inet_addr(m_Config.dns1);
 	dns2 = inet_addr(m_Config.dns2);
@@ -990,7 +1036,6 @@ void WINAPI CMainFrame::RasDialFunc(_In_  HRASCONN hrasconn,
 
 void CMainFrame::Connect(int id)
 {
-
 	PINFO pInfo = m_HostList[id];
 	CString name;
 	name.Format(_T("connbtn_%d"), id);
@@ -1011,7 +1056,7 @@ void CMainFrame::Connect(int id)
 				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetBuffer());
 				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetBuffer());
 				char *lpszL2tpkey = UnicodeToLocal(CP_ACP, pInfo->szL2tpKey.GetBuffer());
-				ret = ConnectionL2tpVPNXP(lpszName, lpszUser, lpszPass, lpszHost, lpszL2tpkey, &pInfo->h, pInfo->crypt);
+				ret = ConnectionL2tpVPNXP(lpszName, lpszUser, lpszPass, lpszHost, lpszL2tpkey, &pInfo->h, pInfo->crypt, m_Config.dwMode);
 				delete[]lpszName;
 				delete[]lpszUser;
 				delete[]lpszPass;
@@ -1020,7 +1065,7 @@ void CMainFrame::Connect(int id)
 			}
 			else
 			{
-				ret = ConnectionL2tpVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), pInfo->szL2tpKey.GetBuffer(), &pInfo->h, pInfo->crypt);
+				ret = ConnectionL2tpVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), pInfo->szL2tpKey.GetBuffer(), &pInfo->h, pInfo->crypt, m_Config.dwMode);
 			}
 				
 		}
@@ -1032,7 +1077,7 @@ void CMainFrame::Connect(int id)
 				char *lpszUser = UnicodeToLocal(CP_ACP, pInfo->user.GetBuffer());
 				char *lpszPass = UnicodeToLocal(CP_ACP, pInfo->pass.GetBuffer());
 				char *lpszHost = UnicodeToLocal(CP_ACP, pInfo->host.GetBuffer());
-				ret = ConnectionVPNXP(lpszName, lpszUser, lpszPass, lpszHost, &pInfo->h, pInfo->crypt);
+				ret = ConnectionVPNXP(lpszName, lpszUser, lpszPass, lpszHost, &pInfo->h, pInfo->crypt, m_Config.dwMode);
 				delete[]lpszName;
 				delete[]lpszUser;
 				delete[]lpszPass;
@@ -1040,7 +1085,7 @@ void CMainFrame::Connect(int id)
 			}
 			else
 			{
-				ret = ConnectionVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), &pInfo->h, pInfo->crypt);
+				ret = ConnectionVPN(szName, pInfo->user.GetBuffer(), pInfo->pass.GetBuffer(), pInfo->host.GetBuffer(), &pInfo->h, pInfo->crypt, m_Config.dwMode);
 			}
 		}
 
@@ -1091,8 +1136,11 @@ void CMainFrame::SaveConfig(PCONFIG pConfig)
 	char szPath[MAX_PATH] = { 0 };
 	GetCurrentDirectoryA(MAX_PATH, szPath);
 	lstrcatA(szPath, "\\yvpn.conf");
+	CStringA mode;
+	mode.Format("%d", pConfig->dwMode);
 	WritePrivateProfileStringA("NETWORK", "dns1", pConfig->dns1, szPath);
 	WritePrivateProfileStringA("NETWORK", "dns2", pConfig->dns2, szPath);
+	WritePrivateProfileStringA("NETWORK", "mode", mode.GetBuffer(), szPath);
 }
 
 void CMainFrame::ReadConfig(PCONFIG pConfig)
@@ -1102,4 +1150,5 @@ void CMainFrame::ReadConfig(PCONFIG pConfig)
 	lstrcatA(szPath, "\\yvpn.conf");
 	GetPrivateProfileStringA(("NETWORK"), ("dns1"), ("8.8.8.8"), pConfig->dns1, MAX_PATH, szPath);
 	GetPrivateProfileStringA(("NETWORK"), ("dns2"), ("8.8.4.4"), pConfig->dns2, MAX_PATH, szPath);
+	pConfig->dwMode = GetPrivateProfileIntA(("NETWORK"), ("mode"), 1, szPath);
 }

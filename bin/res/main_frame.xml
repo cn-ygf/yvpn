@@ -84,6 +84,11 @@
 								<Edit name="dns1edit" text="8.8.8.8" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
 								<Text padding="0,10,0,0" height="18" text="DNS2" font="4"/>
 								<Edit name="dns2edit" text="8.8.4.4" padding="0,5,0,0" bkimage="file='edit_normal.png' corner='1,1,1,1'" hotimage="file='edit_hot.png' corner='1,1,1,1'" pushedimage="file='edit_pushed.png' corner='1,1,1,1'"  height="30" />
+								<Text padding="0,10,0,0" height="18" text="网络模式" font="4"/>
+								<Combo name="networkmode" padding="0,5,0,0" textpadding="0,0,20,0" itemalign="center" itemalign="center" bkimage="file='combo_normal.png' corner='1,1,31,1'" hotimage="file='combo_hot.png' corner='1,1,31,1'" pushedimage="file='combo_pushed.png' corner='1,1,31,1'"  height="30"  itemhotbkcolor="fff1f1f1" itemselectedbkcolor="ffffffff" >
+									<ListLabelElement name="networkmode_0" text="局部模式" />
+									<ListLabelElement name="networkmode_1" text="全局模式" selected="true" />
+								</Combo>
 								<Button name="save2btn" padding="2,10,0,0" pos="0,0,60,25" text="保存" textcolor="#FFFFFFFF" normalimage="btn_login0.png" hotimage="btn_login1.png" pushedimage="btn_login2.png"/>
 							</VerticalLayout>
 							<VerticalLayout>
